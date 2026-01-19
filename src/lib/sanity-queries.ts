@@ -12,7 +12,8 @@ export const getProductsByCategory = async (category: string) => {
       shortDescription,
       interestRate,
       icon,
-      features
+      features,
+      requirements
     }`,
         { category }
     );
