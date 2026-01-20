@@ -1,6 +1,9 @@
 import PageHeader from "@/components/layout/PageHeader";
 import { Download, FileText } from "lucide-react";
 import { Metadata } from "next";
+import { getReports } from "@/lib/sanity-queries";
+
+export const revalidate = 60;
 
 export const metadata: Metadata = {
     title: "Laporan Keuangan - BPR Bapera",
@@ -8,20 +11,16 @@ export const metadata: Metadata = {
 };
 
 interface Report {
+    _id: string;
     year: string;
     period: string; // "Triwulan 1" | "Tahunan"
     title: string;
     fileUrl: string;
 }
 
-const FINANCE_REPORTS: Report[] = [
-    { year: "2024", period: "Triwulan 1", title: "Laporan Keuangan Publikasi Maret 2024", fileUrl: "#" },
-    { year: "2023", period: "Tahunan", title: "Laporan Keuangan Audit Desember 2023", fileUrl: "#" },
-    { year: "2023", period: "Triwulan 3", title: "Laporan Keuangan Publikasi September 2023", fileUrl: "#" },
-    { year: "2023", period: "Triwulan 2", title: "Laporan Keuangan Publikasi Juni 2023", fileUrl: "#" },
-];
+export default async function LaporanKeuanganPage() {
+    const FINANCE_REPORTS: Report[] = await getReports('financial');
 
-export default function LaporanKeuanganPage() {
     return (
         <main>
             <PageHeader
@@ -38,8 +37,8 @@ export default function LaporanKeuanganPage() {
                         </div>
 
                         <div className="divide-y divide-gray-100">
-                            {FINANCE_REPORTS.map((report, idx) => (
-                                <div key={idx} className="p-6 flex flex-col md:flex-row items-start md:items-center justify-between hover:bg-gray-50 transition">
+                            {FINANCE_REPORTS.map((report) => (
+                                <div key={report._id} className="p-6 flex flex-col md:flex-row items-start md:items-center justify-between hover:bg-gray-50 transition">
                                     <div className="flex items-start">
                                         <div className="bg-amber-100 p-3 rounded-lg mr-4 text-amber-600">
                                             <FileText className="h-6 w-6" />
@@ -55,6 +54,8 @@ export default function LaporanKeuanganPage() {
 
                                     <a
                                         href={report.fileUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         className="mt-4 md:mt-0 inline-flex items-center px-4 py-2 border border-blue-900 text-blue-900 text-sm font-medium rounded-lg hover:bg-blue-50 transition"
                                     >
                                         <Download className="h-4 w-4 mr-2" /> Download PDF

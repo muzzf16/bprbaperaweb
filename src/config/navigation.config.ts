@@ -11,7 +11,11 @@ export const NAV_LINKS: NavLink[] = [
     },
     {
         label: "Tentang Kami",
-        href: "/tentang-kami"
+        href: "#",
+        children: [
+            { label: "Profil Perusahaan", href: "/tentang-kami" },
+            { label: "Komisaris & Direksi", href: "/komisaris-direksi" },
+        ]
     },
     {
         label: "Produk",
@@ -20,6 +24,7 @@ export const NAV_LINKS: NavLink[] = [
             { label: "Kredit", href: "/produk/kredit" },
             { label: "Tabungan", href: "/produk/tabungan" },
             { label: "Deposito", href: "/produk/deposito" },
+            { label: "Suku Bunga", href: "/suku-bunga" },
         ]
     },
     {

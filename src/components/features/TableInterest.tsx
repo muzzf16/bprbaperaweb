@@ -1,12 +1,16 @@
-export default function TableInterest() {
-    const interests = [
-        { product: "Tabungan Harian", rate: "2.5% p.a", min: "Rp 100.000" },
-        { product: "Tabungan Berjangka", rate: "4.0% p.a", min: "Rp 500.000" },
-        { product: "Deposito 1 Bulan", rate: "5.0% p.a", min: "Rp 5.000.000" },
-        { product: "Deposito 3 Bulan", rate: "5.25% p.a", min: "Rp 5.000.000" },
-        { product: "Deposito 6 Bulan", rate: "5.5% p.a", min: "Rp 5.000.000" },
-        { product: "Deposito 12 Bulan", rate: "6.0% p.a", min: "Rp 5.000.000" },
-    ];
+import { getInterestRates } from "@/lib/sanity-queries";
+
+interface InterestRate {
+    _id: string;
+    productName: string;
+    rate: string;
+    minBalance?: string;
+    type: 'tabungan' | 'deposito';
+    period?: string;
+}
+
+export default async function TableInterest() {
+    const interests: InterestRate[] = await getInterestRates();
 
     return (
         <div className="overflow-x-auto rounded-lg shadow-md">
@@ -15,23 +19,35 @@ export default function TableInterest() {
                     <tr>
                         <th scope="col" className="px-6 py-4 rounded-tl-lg">Produk</th>
                         <th scope="col" className="px-6 py-4">Suku Bunga</th>
-                        <th scope="col" className="px-6 py-4 rounded-tr-lg">Min. Penempatan</th>
+                        <th scope="col" className="px-6 py-4">Min. Penempatan</th>
+                        <th scope="col" className="px-6 py-4 rounded-tr-lg">Keterangan</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {interests.map((item, index) => (
-                        <tr key={item.product} className={`border-b ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
-                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                {item.product}
-                            </th>
-                            <td className="px-6 py-4 text-amber-600 font-bold">
-                                {item.rate}
-                            </td>
-                            <td className="px-6 py-4">
-                                {item.min}
+                    {interests.length > 0 ? (
+                        interests.map((item, index) => (
+                            <tr key={item._id} className={`border-b ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
+                                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                    {item.productName}
+                                </th>
+                                <td className="px-6 py-4 text-amber-600 font-bold">
+                                    {item.rate}
+                                </td>
+                                <td className="px-6 py-4">
+                                    {item.minBalance || "-"}
+                                </td>
+                                <td className="px-6 py-4 text-gray-500">
+                                    {item.period ? `${item.period} (${item.type})` : capitalizeFirstLetter(item.type)}
+                                </td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan={4} className="px-6 py-8 text-center text-gray-500 italic">
+                                Data suku bunga belum tersedia.
                             </td>
                         </tr>
-                    ))}
+                    )}
                 </tbody>
             </table>
             <div className="mt-4 text-xs text-gray-500 italic">
@@ -39,4 +55,8 @@ export default function TableInterest() {
             </div>
         </div>
     );
+}
+
+function capitalizeFirstLetter(string: string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }

@@ -6,9 +6,28 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NAV_LINKS } from "@/config";
 
-export default function Header() {
+// Interface locally defined or imported
+interface HeaderProps {
+    data?: {
+        branding?: {
+            siteTitle?: string;
+            logo?: any;
+        };
+        mainMenu?: {
+            label?: string;
+            href?: string;
+            children?: { label: string; href: string }[];
+        }[];
+    } | null;
+}
+
+export default function Header({ data }: HeaderProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+
+    // Fallback to local config if no sanity data
+    const links = data?.mainMenu || NAV_LINKS;
+    const siteTitle = data?.branding?.siteTitle || "BPR Bapera";
 
     return (
         <header className="sticky top-0 z-50 w-full bg-white shadow-md">
@@ -16,14 +35,15 @@ export default function Header() {
                 <div className="flex h-16 items-center justify-between">
                     {/* Logo */}
                     <Link href="/" className="flex items-center space-x-2">
-                        <span className="text-2xl font-bold text-blue-900">BPR Bapera</span>
+                        {/* Optional Image Logo Logic Here */}
+                        <span className="text-2xl font-bold text-blue-900">{siteTitle}</span>
                     </Link>
 
                     {/* Desktop Navigation */}
                     <nav className="hidden md:flex items-center space-x-8">
-                        {NAV_LINKS.map((link) => (
+                        {links.map((link) => (
                             <div key={link.label} className="relative group">
-                                {link.children ? (
+                                {link.children && link.children.length > 0 ? (
                                     <button
                                         className="flex items-center text-sm font-medium text-gray-700 hover:text-blue-900 transition-colors"
                                     >
@@ -31,7 +51,7 @@ export default function Header() {
                                     </button>
                                 ) : (
                                     <Link
-                                        href={link.href}
+                                        href={link.href || '#'}
                                         className="text-sm font-medium text-gray-700 hover:text-blue-900 transition-colors"
                                     >
                                         {link.label}
@@ -39,12 +59,12 @@ export default function Header() {
                                 )}
 
                                 {/* Dropdown */}
-                                {link.children && (
+                                {link.children && link.children.length > 0 && (
                                     <div className="absolute top-full left-0 mt-2 w-48 rounded-md bg-white py-2 shadow-lg ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                         {link.children.map((child) => (
                                             <Link
                                                 key={child.label}
-                                                href={child.href}
+                                                href={child.href || '#'}
                                                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-900"
                                             >
                                                 {child.label}
@@ -80,9 +100,9 @@ export default function Header() {
             {isOpen && (
                 <div className="md:hidden border-t border-gray-100 bg-white">
                     <div className="space-y-1 px-4 py-3">
-                        {NAV_LINKS.map((link) => (
+                        {links.map((link) => (
                             <div key={link.label}>
-                                {link.children ? (
+                                {link.children && link.children.length > 0 ? (
                                     <>
                                         <button
                                             onClick={() => setActiveDropdown(activeDropdown === link.label ? null : link.label)}
@@ -98,7 +118,7 @@ export default function Header() {
                                                 {link.children.map((child) => (
                                                     <Link
                                                         key={child.label}
-                                                        href={child.href}
+                                                        href={child.href || '#'}
                                                         className="block py-2 text-sm text-gray-600 hover:text-blue-900"
                                                         onClick={() => setIsOpen(false)}
                                                     >
@@ -110,7 +130,7 @@ export default function Header() {
                                     </>
                                 ) : (
                                     <Link
-                                        href={link.href}
+                                        href={link.href || '#'}
                                         className="block py-2 text-base font-medium text-gray-700 hover:text-blue-900"
                                         onClick={() => setIsOpen(false)}
                                     >

@@ -1,6 +1,8 @@
 import PageHeader from "@/components/layout/PageHeader";
 import { Metadata } from "next";
 import { UserCircle2 } from "lucide-react";
+import { getTeamMembers } from "@/lib/sanity-queries";
+import Image from "next/image";
 
 export const metadata: Metadata = {
     title: "Dewan Komisaris & Direksi - BPR Bapera",
@@ -8,44 +10,25 @@ export const metadata: Metadata = {
 };
 
 interface TeamMember {
+    _id: string;
     name: string;
     position: string;
-    image?: string;
+    role: 'commissioner' | 'director';
+    imageUrl?: string;
     bio?: string;
 }
-
-const COMMISSIONERS: TeamMember[] = [
-    {
-        name: "Nama Komisaris Utama",
-        position: "Komisaris Utama",
-        bio: "Berpengalaman lebih dari 20 tahun di industri perbankan."
-    },
-    {
-        name: "Nama Komisaris",
-        position: "Komisaris",
-        bio: "Ahli dalam manajemen risiko dan kepatuhan perbankan."
-    }
-];
-
-const DIRECTORS: TeamMember[] = [
-    {
-        name: "Nama Direktur Utama",
-        position: "Direktur Utama",
-        bio: "Memimpin strategi bisnis dan operasional bank secara keseluruhan."
-    },
-    {
-        name: "Nama Direktur",
-        position: "Direktur",
-        bio: "Bertanggung jawab atas operasional harian dan kepatuhan."
-    }
-];
 
 function TeamCard({ member }: { member: TeamMember }) {
     return (
         <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 flex flex-col items-center p-6 hover:shadow-lg transition-shadow">
-            <div className="w-32 h-32 mb-4 bg-gray-100 rounded-full flex items-center justify-center overflow-hidden">
-                {member.image ? (
-                    <div className="w-full h-full bg-gray-300"></div> // Placeholder for actual Next/Image
+            <div className="w-32 h-32 mb-4 bg-gray-100 rounded-full flex items-center justify-center overflow-hidden relative">
+                {member.imageUrl ? (
+                    <Image
+                        src={member.imageUrl}
+                        alt={member.name}
+                        fill
+                        className="object-cover"
+                    />
                 ) : (
                     <UserCircle2 className="h-20 w-20 text-gray-300" />
                 )}
@@ -57,7 +40,14 @@ function TeamCard({ member }: { member: TeamMember }) {
     );
 }
 
-export default function ManajemenPage() {
+export const revalidate = 60; // Revalidate every 60 seconds
+
+export default async function ManajemenPage() {
+    const teamMembers: TeamMember[] = await getTeamMembers();
+
+    const commissioners = teamMembers.filter(m => m.role === 'commissioner');
+    const directors = teamMembers.filter(m => m.role === 'director');
+
     return (
         <main>
             <PageHeader
@@ -74,11 +64,15 @@ export default function ManajemenPage() {
                         <h2 className="text-3xl font-bold text-gray-900">Dewan Komisaris</h2>
                         <div className="w-20 h-1 bg-amber-500 mx-auto mt-4 rounded-full"></div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                        {COMMISSIONERS.map((member, idx) => (
-                            <TeamCard key={idx} member={member} />
-                        ))}
-                    </div>
+                    {commissioners.length > 0 ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                            {commissioners.map((member) => (
+                                <TeamCard key={member._id} member={member} />
+                            ))}
+                        </div>
+                    ) : (
+                        <p className="text-center text-gray-500 italic">Data Komisaris belum tersedia.</p>
+                    )}
                 </div>
 
                 {/* Direksi */}
@@ -87,11 +81,15 @@ export default function ManajemenPage() {
                         <h2 className="text-3xl font-bold text-gray-900">Direksi</h2>
                         <div className="w-20 h-1 bg-amber-500 mx-auto mt-4 rounded-full"></div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                        {DIRECTORS.map((member, idx) => (
-                            <TeamCard key={idx} member={member} />
-                        ))}
-                    </div>
+                    {directors.length > 0 ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                            {directors.map((member) => (
+                                <TeamCard key={member._id} member={member} />
+                            ))}
+                        </div>
+                    ) : (
+                        <p className="text-center text-gray-500 italic">Data Direksi belum tersedia.</p>
+                    )}
                 </div>
 
                 <div className="mt-20 text-center bg-blue-100/50 p-8 rounded-2xl max-w-4xl mx-auto">
@@ -99,10 +97,12 @@ export default function ManajemenPage() {
                     <p className="text-gray-700 mb-4">
                         BPR Bapera menerapkan tata kelola perusahaan yang baik dengan pemisahan tugas dan tanggung jawab yang jelas.
                     </p>
-                    {/* Link to Struktur Organisasi page if needed, or keeping it simple for now */}
                 </div>
+
+
 
             </div>
         </main>
     );
 }
+

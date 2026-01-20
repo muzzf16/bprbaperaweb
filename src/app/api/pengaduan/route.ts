@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { createResponse, createErrorResponse } from "@/lib/api-utils";
-import { isValidPhoneNumber, sleep } from "@/lib/utils";
+import { sleep } from "@/lib/utils";
 
 interface PengaduanFormData {
     name: string;
@@ -16,7 +16,7 @@ interface PengaduanFormData {
 export async function POST(request: NextRequest) {
     try {
         const body = (await request.json()) as PengaduanFormData;
-        const { name, identityNumber, accountNumber, contact, category, chronology } = body;
+        const { name, identityNumber, accountNumber, contact, chronology } = body;
 
         // 1. Validation
         const errors: Record<string, string[]> = {};

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { calculateEffectiveInterest, calculateFlatInterest, formatCurrency, SimulationResult } from "@/lib/utils";
 import { Calculator, RefreshCw } from "lucide-react";
 
@@ -11,17 +11,17 @@ export default function CreditSimulator() {
     const [type, setType] = useState<"flat" | "effective">("flat");
     const [result, setResult] = useState<SimulationResult | null>(null);
 
-    const calculate = () => {
+    const calculate = useCallback(() => {
         if (type === "flat") {
             setResult(calculateFlatInterest(amount, rate, tenor));
         } else {
             setResult(calculateEffectiveInterest(amount, rate, tenor));
         }
-    };
+    }, [amount, rate, tenor, type]);
 
     useEffect(() => {
         calculate();
-    }, [amount, tenor, rate, type]);
+    }, [calculate]);
 
     return (
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">

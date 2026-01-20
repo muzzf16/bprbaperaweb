@@ -1,6 +1,5 @@
 import Link from "next/link";
 import PageHeader from "@/components/layout/PageHeader";
-import { CREDIT_PRODUCTS } from "@/lib/data";
 import { ArrowRight, CheckCircle } from "lucide-react";
 import { Metadata } from "next";
 
@@ -12,17 +11,21 @@ export const metadata: Metadata = {
 // Import dynamic fetching
 import { getProductsByCategory } from "@/lib/sanity-queries";
 
+interface SanityProduct {
+    _id: string;
+    title: string;
+    slug: string;
+    shortDescription?: string;
+    description?: Array<{ children?: Array<{ text?: string }> }>;
+    features?: string[];
+}
+
 // This is a Server Component, so we can make it async
 export default async function KreditPage() {
     // Fetch products from Sanity (with cache revalidation)
     const products = await getProductsByCategory('kredit');
 
-    // Default icons mapping if icon string is missing or invalid
-    // In a real app we would use a proper icon mapper or Lucide dynamic imports
-    const getIcon = (iconName: string) => {
-        // Placeholder logic - validation should happen at mapping level
-        return CheckCircle; // Fallback
-    };
+
 
     return (
         <main>
@@ -41,7 +44,7 @@ export default async function KreditPage() {
                         </div>
                     )}
 
-                    {products.map((product: any, index: number) => (
+                    {products.map((product: SanityProduct, index: number) => (
                         <div
                             key={product._id}
                             className={`flex flex-col md:flex-row bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow border border-gray-100 ${index % 2 === 1 ? 'md:flex-row-reverse' : ''}`}

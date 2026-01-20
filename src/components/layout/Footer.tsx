@@ -1,8 +1,12 @@
 import Link from "next/link";
 import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
 import { LPSBadge, OJKBadge } from "@/components/compliance";
+import { getSiteSettings } from "@/lib/sanity-queries";
 
-export default function Footer() {
+export default async function Footer() {
+    const settings = await getSiteSettings();
+    const contact = settings?.contactInfo;
+
     return (
         <footer className="bg-gray-900 text-white pt-12 pb-8">
             <div className="container mx-auto px-4 md:px-6">
@@ -10,7 +14,7 @@ export default function Footer() {
                     {/* Brand & Desc */}
                     <div className="space-y-6">
                         <div>
-                            <h3 className="text-2xl font-bold mb-2">BPR Bapera</h3>
+                            <h3 className="text-2xl font-bold mb-2">{settings?.branding?.siteTitle || "BPR Bapera"}</h3>
                             <p className="text-gray-400 text-sm leading-relaxed">
                                 Mitra keuangan terpercaya Anda. Berizin dan diawasi oleh Otoritas Jasa Keuangan (OJK).
                             </p>
@@ -62,22 +66,22 @@ export default function Footer() {
                         <ul className="space-y-3 text-sm text-gray-400">
                             <li className="flex items-start space-x-3">
                                 <MapPin className="h-5 w-5 flex-shrink-0 mt-0.5 text-amber-500" />
-                                <span>Jl. Raya Perbankan No. 123, Jakarta Selatan, 12345</span>
+                                <span>{contact?.address || "Jl. Jendral Sudirman No. 72, Batang, 51215"}</span>
                             </li>
                             <li className="flex items-center space-x-3">
                                 <Phone className="h-5 w-5 flex-shrink-0 text-amber-500" />
-                                <span>(021) 123-4567</span>
+                                <span>{contact?.phone || "(0285) 451111"}</span>
                             </li>
                             <li className="flex items-center space-x-3">
                                 <Mail className="h-5 w-5 flex-shrink-0 text-amber-500" />
-                                <span>info@bprbapera.co.id</span>
+                                <span>{contact?.email || "bprbapera_btg@yahoo.co.id"}</span>
                             </li>
                         </ul>
                     </div>
                 </div>
 
                 <div className="mt-12 pt-8 border-t border-gray-800 text-center text-sm text-gray-500">
-                    <p>&copy; {new Date().getFullYear()} PT BPR Bapera. All rights reserved.</p>
+                    <p>&copy; 2026 {settings?.branding?.siteTitle || "PT BPR Bapera"}. All rights reserved.</p>
                     <p className="mt-2 text-xs">
                         PT BPR Bapera merupakan peserta penjaminan LPS dan terdaftar serta diawasi oleh OJK.
                     </p>

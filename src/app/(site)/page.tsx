@@ -2,15 +2,48 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Wallet, Landmark, PiggyBank, ShieldCheck } from "lucide-react";
 import CardProduct from "@/components/product/CardProduct";
+import { getHomepageData } from "@/lib/sanity-queries";
+import * as LucideIcons from "lucide-react";
 
-export default function Home() {
+export const revalidate = 60;
+
+// Dynamic Icon Component
+const DynamicIcon = ({ name, className }: { name: string; className?: string }) => {
+  const Icon = (LucideIcons as any)[name];
+  if (!Icon) return <ShieldCheck className={className} />; // Fallback icon
+  return <Icon className={className} />;
+};
+
+interface HomepageData {
+  heroTitle: string;
+  heroSubtitle: string;
+  heroImageUrl?: string;
+  features: {
+    title: string;
+    description: string;
+    icon: string;
+  }[];
+  ctaSection?: {
+    title: string;
+    body: string;
+  }
+}
+
+export default async function Home() {
+  const data: HomepageData | null = await getHomepageData();
+
+  // Fallback defaults if Sanity data is missing (e.g. initial load)
+  const heroTitle = data?.heroTitle || "Solusi Keuangan Terpercaya & Aman";
+  const heroSubtitle = data?.heroSubtitle || "Bersama BPR Bapera, wujudkan impian finansial Anda dengan layanan perbankan yang transparan dan diawasi OJK.";
+  const heroImage = data?.heroImageUrl || "/images/hero_bpr.png";
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
       <section className="relative h-[600px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/hero_bpr.png"
+            src={heroImage}
             alt="BPR Bapera Office"
             fill
             className="object-cover"
@@ -20,11 +53,11 @@ export default function Home() {
         </div>
 
         <div className="relative z-10 container mx-auto px-4 md:px-6 text-center text-white">
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 drop-shadow-lg">
-            Solusi Keuangan <br /> <span className="text-amber-400">Terpercaya & Aman</span>
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 drop-shadow-lg max-w-4xl mx-auto">
+            {heroTitle}
           </h1>
           <p className="text-xl md:text-2xl text-blue-100 max-w-2xl mx-auto mb-8 font-light">
-            Bersama BPR Bapera, wujudkan impian finansial Anda dengan layanan perbankan yang transparan dan diawasi OJK.
+            {heroSubtitle}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -53,32 +86,47 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-blue-100 text-blue-900 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <ShieldCheck className="h-8 w-8" />
+            {data?.features?.map((feature, idx) => (
+              <div key={idx} className="text-center p-6">
+                <div className="w-16 h-16 bg-blue-100 text-blue-900 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <DynamicIcon name={feature.icon} className="h-8 w-8" />
+                </div>
+                <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
+                <p className="text-gray-600">{feature.description}</p>
               </div>
-              <h3 className="text-xl font-bold mb-2">Aman & Terdaftar</h3>
-              <p className="text-gray-600">Berizin dan diawasi oleh Otoritas Jasa Keuangan (OJK) serta dijamin LPS.</p>
-            </div>
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-blue-100 text-blue-900 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Landmark className="h-8 w-8" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Bunga Kompetitif</h3>
-              <p className="text-gray-600">Suku bunga tabungan dan deposito yang menarik dan menguntungkan.</p>
-            </div>
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-blue-100 text-blue-900 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Wallet className="h-8 w-8" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Proses Cepat</h3>
-              <p className="text-gray-600">Kredit cair dengan cepat. Syarat mudah dan proses tidak berbelit-belit.</p>
-            </div>
+            )) || (
+                /* FALLBACK STATIC CONTENT IF NO DATA */
+                <>
+                  <div className="text-center p-6">
+                    <div className="w-16 h-16 bg-blue-100 text-blue-900 rounded-2xl flex items-center justify-center mx-auto mb-4"><ShieldCheck className="h-8 w-8" /></div>
+                    <h3 className="text-xl font-bold mb-2">Aman & Terdaftar</h3>
+                    <p className="text-gray-600">Berizin dan diawasi oleh OJK serta dijamin LPS.</p>
+                  </div>
+                  {/* Simplified fallback for demo continuity */}
+                </>
+              )}
+
+            {/* Show static fallback only if no data fetched at all to ensure layout stability */}
+            {!data?.features && (
+              <>
+                <div className="text-center p-6">
+                  <div className="w-16 h-16 bg-blue-100 text-blue-900 rounded-2xl flex items-center justify-center mx-auto mb-4"><Landmark className="h-8 w-8" /></div>
+                  <h3 className="text-xl font-bold mb-2">Bunga Kompetitif</h3>
+                  <p className="text-gray-600">Suku bunga menarik dan menguntungkan.</p>
+                </div>
+                <div className="text-center p-6">
+                  <div className="w-16 h-16 bg-blue-100 text-blue-900 rounded-2xl flex items-center justify-center mx-auto mb-4"><Wallet className="h-8 w-8" /></div>
+                  <h3 className="text-xl font-bold mb-2">Proses Cepat</h3>
+                  <p className="text-gray-600">Kredit cair dengan cepat dan syarat mudah.</p>
+                </div>
+              </>
+            )}
+
           </div>
         </div>
       </section>
 
-      {/* Products Section */}
+      {/* Products Section - STILL STATIC/PARTIAL DYNAMIC (KEEP AS IS FOR NOW) */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col md:flex-row justify-between items-end mb-12">
@@ -94,14 +142,14 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <CardProduct
               title="Kredit Modal Kerja"
-              description="Tambahan modal usaha dengan bunga bersaing dan proses cepat untuk kemajuan bisnis Anda."
+              description="Tambahan modal usaha dengan bunga bersaing dan proses cepat."
               icon={Wallet}
               href="/produk/kredit/kredit-modal-kerja"
               bgColor="bg-white"
             />
             <CardProduct
               title="Tabungan Masa Depan"
-              description="Simpan dana Anda dengan aman dan nikmati bunga menarik untuk masa depan yang lebih baik."
+              description="Simpan dana Anda dengan aman dan nikmati bunga menarik."
               icon={PiggyBank}
               href="/produk/tabungan"
               bgColor="bg-blue-900"
@@ -109,7 +157,7 @@ export default function Home() {
             />
             <CardProduct
               title="Deposito Berjangka"
-              description="Investasi aman dengan suku bunga tinggi dan jangka waktu fleksibel sesuai kebutuhan."
+              description="Investasi aman dengan suku bunga tinggi dan fleksibel."
               icon={Landmark}
               href="/produk/deposito"
               bgColor="bg-white"
@@ -128,9 +176,11 @@ export default function Home() {
       <section className="py-20 bg-blue-900 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
         <div className="container mx-auto px-4 md:px-6 relative z-10 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Butuh Dana Cepat atau Ingin Menabung?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            {data?.ctaSection?.title || "Butuh Dana Cepat atau Ingin Menabung?"}
+          </h2>
           <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
-            Tim kami siap membantu Anda menemukan solusi finansial terbaik. Hubungi kami sekarang atau datang ke kantor cabang terdekat.
+            {data?.ctaSection?.body || "Tim kami siap membantu Anda menemukan solusi finansial terbaik. Hubungi kami sekarang."}
           </p>
           <Link
             href="/kontak"

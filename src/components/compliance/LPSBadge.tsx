@@ -1,4 +1,4 @@
-import { Shield } from "lucide-react";
+
 
 /**
  * Component to display LPS Guarantee info

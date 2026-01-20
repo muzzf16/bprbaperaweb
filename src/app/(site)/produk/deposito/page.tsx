@@ -4,6 +4,15 @@ import { CheckCircle, Landmark, ShieldCheck } from "lucide-react";
 import { Metadata } from "next";
 import { getProductsByCategory } from "@/lib/sanity-queries";
 
+interface SanityProduct {
+    _id: string;
+    title: string;
+    slug: string;
+    shortDescription?: string;
+    features?: string[];
+    requirements?: string[];
+}
+
 export const metadata: Metadata = {
     title: "Produk Deposito - BPR Bapera",
     description: "Investasi berjangka dengan suku bunga kompetitif dan dijamin LPS. Pilihan tepat untuk mengembangkan dana Anda.",
@@ -49,7 +58,7 @@ export default async function DepositoPage() {
                         </div>
                     </div>
 
-                    // Product Details - Dynamic
+                    {/* Product Details - Dynamic */}
                     <div className="grid gap-12">
                         {/* Empty State */}
                         {products.length === 0 && (
@@ -58,7 +67,7 @@ export default async function DepositoPage() {
                             </div>
                         )}
 
-                        {products.map((product: any) => (
+                        {products.map((product: SanityProduct) => (
                             <div key={product._id}>
                                 <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
                                     <Landmark className="h-6 w-6 mr-3 text-blue-900" />

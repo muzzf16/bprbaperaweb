@@ -1,6 +1,5 @@
 import Link from "next/link";
 import PageHeader from "@/components/layout/PageHeader";
-import { SAVING_PRODUCTS } from "@/lib/data";
 import { CheckCircle } from "lucide-react";
 import { Metadata } from "next";
 
@@ -11,6 +10,15 @@ export const metadata: Metadata = {
 
 // Import dynamic fetching
 import { getProductsByCategory } from "@/lib/sanity-queries";
+
+interface SanityProduct {
+    _id: string;
+    title: string;
+    interestRate?: string;
+    shortDescription?: string;
+    features?: string[];
+    requirements?: string[];
+}
 
 // Async Server Component
 export default async function TabunganPage() {
@@ -34,7 +42,7 @@ export default async function TabunganPage() {
                         </div>
                     )}
 
-                    {products.map((product: any) => (
+                    {products.map((product: SanityProduct) => (
                         <div key={product._id} className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 p-8 flex flex-col md:flex-row gap-8">
                             <div className="md:w-1/4 flex flex-col items-center justify-center text-center p-4 bg-blue-50 rounded-xl">
                                 {/* Icon Fallback */}

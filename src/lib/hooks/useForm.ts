@@ -12,7 +12,7 @@ interface UseFormReturn<T> {
     isSubmitting: boolean;
     handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
     handleSubmit: (e: React.FormEvent) => Promise<void>;
-    setFieldValue: (field: keyof T, value: any) => void;
+    setFieldValue: (field: keyof T, value: T[keyof T]) => void;
     setFieldError: (field: string, error: string) => void;
     resetForm: () => void;
 }
@@ -37,7 +37,7 @@ interface UseFormReturn<T> {
  * });
  * ```
  */
-export function useForm<T extends Record<string, any>>({
+export function useForm<T extends Record<string, unknown>>({
     initialValues,
     onSubmit,
     validate,
@@ -72,7 +72,7 @@ export function useForm<T extends Record<string, any>>({
         [errors]
     );
 
-    const setFieldValue = useCallback((field: keyof T, value: any) => {
+    const setFieldValue = useCallback((field: keyof T, value: T[keyof T]) => {
         setValues((prev) => ({
             ...prev,
             [field]: value,
@@ -104,9 +104,10 @@ export function useForm<T extends Record<string, any>>({
 
             try {
                 await onSubmit(values);
-            } catch (error: any) {
+            } catch (error: unknown) {
                 console.error("Form submission error:", error);
-                setErrors({ submit: error.message || "Submission failed" });
+                const errorMessage = error instanceof Error ? error.message : "Submission failed";
+                setErrors({ submit: errorMessage });
             } finally {
                 setIsSubmitting(false);
             }

@@ -1,4 +1,4 @@
-import { ShieldCheck } from "lucide-react";
+
 
 /**
  * Component to display OJK Registration info

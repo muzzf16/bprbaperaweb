@@ -4,6 +4,7 @@ import { Calendar, User } from "lucide-react";
 import Image from "next/image";
 import { Metadata } from "next";
 import { getArticles } from "@/lib/sanity-queries";
+import { SanityArticle } from "@/types/article.types";
 
 export const metadata: Metadata = {
     title: "Artikel & Edukasi - BPR Bapera",
@@ -30,7 +31,7 @@ export default async function ArtikelPage() {
                         </div>
                     )}
 
-                    {articles.map((article: any) => (
+                    {articles.map((article: SanityArticle) => (
                         <article key={article._id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow border border-gray-100 flex flex-col h-full">
                             {/* Placeholder image if no real image */}
                             <div className="h-48 bg-gray-200 relative">

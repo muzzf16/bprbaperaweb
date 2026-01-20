@@ -1,6 +1,9 @@
 import PageHeader from "@/components/layout/PageHeader";
 import { Download, ShieldCheck } from "lucide-react";
 import { Metadata } from "next";
+import { getReports } from "@/lib/sanity-queries";
+
+export const revalidate = 60;
 
 export const metadata: Metadata = {
     title: "Laporan GCG - BPR Bapera",
@@ -8,18 +11,15 @@ export const metadata: Metadata = {
 };
 
 interface Report {
+    _id: string;
     year: string;
     title: string;
     fileUrl: string;
 }
 
-const GCG_REPORTS: Report[] = [
-    { year: "2023", title: "Laporan GCG Tahun 2023", fileUrl: "#" },
-    { year: "2022", title: "Laporan GCG Tahun 2022", fileUrl: "#" },
-    { year: "2021", title: "Laporan GCG Tahun 2021", fileUrl: "#" },
-];
+export default async function LaporanGCGPage() {
+    const GCG_REPORTS: Report[] = await getReports('gcg');
 
-export default function LaporanGCGPage() {
     return (
         <main>
             <PageHeader
@@ -48,8 +48,8 @@ export default function LaporanGCGPage() {
                         </div>
 
                         <div className="divide-y divide-gray-100">
-                            {GCG_REPORTS.map((report, idx) => (
-                                <div key={idx} className="p-6 flex flex-col md:flex-row items-start md:items-center justify-between hover:bg-gray-50 transition">
+                            {GCG_REPORTS.map((report) => (
+                                <div key={report._id} className="p-6 flex flex-col md:flex-row items-start md:items-center justify-between hover:bg-gray-50 transition">
                                     <div>
                                         <h3 className="font-bold text-gray-800 text-lg mb-1">{report.title}</h3>
                                         <p className="text-sm text-gray-500">Periode Pelaporan: {report.year}</p>
@@ -57,6 +57,8 @@ export default function LaporanGCGPage() {
 
                                     <a
                                         href={report.fileUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         className="mt-4 md:mt-0 inline-flex items-center px-4 py-2 border border-blue-900 text-blue-900 text-sm font-medium rounded-lg hover:bg-blue-50 transition"
                                     >
                                         <Download className="h-4 w-4 mr-2" /> Download PDF

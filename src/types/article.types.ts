@@ -40,3 +40,21 @@ export interface ArticleFilter {
     limit?: number;
     offset?: number;
 }
+
+/**
+ * Sanity CMS article response structure
+ */
+export interface SanityArticle {
+    _id: string;
+    title: string;
+    slug: string;
+    excerpt?: string;
+    content?: unknown;
+    category?: string;
+    publishedAt?: string;
+    imageUrl?: string;
+    author?: {
+        name: string;
+        imageUrl?: string;
+    };
+}

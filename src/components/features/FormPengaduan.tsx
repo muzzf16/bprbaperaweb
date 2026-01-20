@@ -71,9 +71,10 @@ export default function FormPengaduan() {
                 chronology: "",
                 attachment: null,
             });
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error("Submission Error:", error);
-            alert(error.message || "Terjadi kesalahan. Silakan coba lagi.");
+            const errorMessage = error instanceof Error ? error.message : "Terjadi kesalahan. Silakan coba lagi.";
+            alert(errorMessage);
         } finally {
             setIsSubmitting(false);
         }
