@@ -50,3 +50,27 @@ export const getArticleBySlug = async (slug: string) => {
         return null;
     }
 };
+
+// Query to get site global settings (branding, theme, logos)
+export const getSiteSettings = async () => {
+    return {
+        title: "PT BPR Bapera Batang",
+        description: "Bank Perekonomian Rakyat Terpercaya di Kabupaten Batang",
+        branding: {
+            primaryColor: "#091b40",
+            accentColor: "#f59e0b"
+        }
+    };
+};
+
+// Query to get interest rates
+export const getInterestRates = async () => {
+    return [
+        { _id: "int-1", productName: "Tabungan Utama", rate: "2.50% p.a.", minBalance: "Rp 100.000", type: "tabungan" },
+        { _id: "int-2", productName: "Tabungan Kencana", rate: "3.50% p.a.", minBalance: "Rp 1.000.000", type: "tabungan" },
+        { _id: "int-3", productName: "Deposito Berjangka 1 Bulan", rate: "5.00% p.a.", minBalance: "Rp 5.000.000", type: "deposito", period: "1 Bulan" },
+        { _id: "int-4", productName: "Deposito Berjangka 3 Bulan", rate: "5.75% p.a.", minBalance: "Rp 5.000.000", type: "deposito", period: "3 Bulan" },
+        { _id: "int-5", productName: "Deposito Berjangka 6 Bulan", rate: "6.25% p.a.", minBalance: "Rp 5.000.000", type: "deposito", period: "6 Bulan" },
+        { _id: "int-6", productName: "Deposito Berjangka 12 Bulan", rate: "6.75% p.a.", minBalance: "Rp 5.000.000", type: "deposito", period: "12 Bulan" }
+    ];
+};

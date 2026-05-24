@@ -34,7 +34,7 @@
             "testimonials",
             "cta"
         ],
-        "heroBgType": "image",
+        "heroBgType": "gradient",
         "heroBgImage": "/images/hero_bpr.png",
         "heroBgOverlay": "70",
         "heroTextAlignment": "center"

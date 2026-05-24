@@ -1,6 +1,7 @@
 import Link from "next/link";
+import Image from "next/image";
 import PageHeader from "@/components/layout/PageHeader";
-import { ArrowRight, CheckCircle } from "lucide-react";
+import { ArrowRight, CheckCircle, Wallet, PiggyBank, Landmark, ShieldCheck } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -18,14 +19,14 @@ interface SanityProduct {
     shortDescription?: string;
     description?: Array<{ children?: Array<{ text?: string }> }>;
     features?: string[];
+    imageUrl?: string;
+    icon?: string;
 }
 
 // This is a Server Component, so we can make it async
 export default async function KreditPage() {
     // Fetch products from Sanity (with cache revalidation)
     const products = await getProductsByCategory('kredit');
-
-
 
     return (
         <main>
@@ -47,16 +48,38 @@ export default async function KreditPage() {
                     {products.map((product: SanityProduct, index: number) => (
                         <div
                             key={product._id}
-                            className={`flex flex-col md:flex-row bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow border border-gray-100 ${index % 2 === 1 ? 'md:flex-row-reverse' : ''}`}
+                            className={`flex flex-col md:flex-row bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100/70 ${index % 2 === 1 ? 'md:flex-row-reverse' : ''} group`}
                         >
-                            {/* Icon/Image Area */}
-                            <div className="bg-blue-900 w-full md:w-1/3 p-10 flex items-center justify-center text-white">
-                                <div className="text-center">
-                                    <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                                        {/* Since Sanity stores icon name as string, fallback to generic for now */}
-                                        <CheckCircle className="h-10 w-10 text-white" />
+                            {/* Dynamic Uploaded Cover Image or Color Gradient Background */}
+                            <div className="relative w-full md:w-1/3 min-h-[260px] md:min-h-auto overflow-hidden flex items-center justify-center text-white">
+                                {product.imageUrl ? (
+                                    <>
+                                        <Image 
+                                            src={product.imageUrl} 
+                                            alt={product.title} 
+                                            fill 
+                                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                            unoptimized
+                                        />
+                                        <div className="absolute inset-0 bg-blue-950/85 backdrop-blur-[0.5px]" />
+                                    </>
+                                ) : (
+                                    <div className="absolute inset-0 bg-gradient-to-br from-blue-900 to-blue-950" />
+                                )}
+                                
+                                <div className="relative z-10 text-center p-6 flex flex-col items-center">
+                                    <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mb-4 backdrop-blur-md border border-white/10 group-hover:scale-105 transition-transform duration-300">
+                                        {product.icon === "PiggyBank" ? (
+                                            <PiggyBank className="h-8 w-8 text-white" />
+                                        ) : product.icon === "Landmark" ? (
+                                            <Landmark className="h-8 w-8 text-white" />
+                                        ) : product.icon === "ShieldCheck" ? (
+                                            <ShieldCheck className="h-8 w-8 text-white" />
+                                        ) : (
+                                            <Wallet className="h-8 w-8 text-white" />
+                                        )}
                                     </div>
-                                    <h3 className="text-2xl font-bold">{product.title}</h3>
+                                    <h3 className="text-xl font-bold tracking-tight text-white">{product.title}</h3>
                                 </div>
                             </div>
 

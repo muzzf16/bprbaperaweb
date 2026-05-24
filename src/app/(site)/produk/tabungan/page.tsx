@@ -1,6 +1,7 @@
 import Link from "next/link";
+import Image from "next/image";
 import PageHeader from "@/components/layout/PageHeader";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, Wallet, PiggyBank, Landmark, ShieldCheck } from "lucide-react";
 import { Metadata } from "next";
 import { getProductsByCategory } from "@/lib/sanity-queries";
 import { SAVING_PRODUCTS } from "@/lib/data";
@@ -47,13 +48,32 @@ export default async function TabunganPage() {
 
                     {products.map((product: any) => (
                         <div key={product._id} className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 p-8 flex flex-col md:flex-row gap-8">
-                            <div className="md:w-1/4 flex flex-col items-center justify-center text-center p-4 bg-blue-50 rounded-xl">
-                                {/* Icon Fallback */}
-                                <div className="h-16 w-16 text-blue-900 mb-4 flex items-center justify-center bg-blue-100 rounded-full">
-                                    <span className="text-2xl font-bold">Rp</span>
+                            <div className="md:w-1/4 flex flex-col items-center justify-center text-center p-4 bg-blue-50 rounded-xl relative overflow-hidden">
+                                {product.imageUrl && (
+                                    <div className="absolute inset-0 opacity-10">
+                                        <Image
+                                            src={product.imageUrl}
+                                            alt={product.title}
+                                            fill
+                                            className="object-cover"
+                                            unoptimized
+                                        />
+                                    </div>
+                                )}
+                                {/* Dynamic Icon */}
+                                <div className="h-16 w-16 text-blue-900 mb-4 flex items-center justify-center bg-blue-100 rounded-full z-10">
+                                    {product.icon === "Wallet" ? (
+                                        <Wallet className="h-8 w-8" />
+                                    ) : product.icon === "Landmark" ? (
+                                        <Landmark className="h-8 w-8" />
+                                    ) : product.icon === "ShieldCheck" ? (
+                                        <ShieldCheck className="h-8 w-8" />
+                                    ) : (
+                                        <PiggyBank className="h-8 w-8" />
+                                    )}
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-900">{product.title}</h3>
-                                <p className="text-amber-600 font-bold mt-2">{product.interestRate}</p>
+                                <h3 className="text-xl font-bold text-gray-900 z-10">{product.title}</h3>
+                                <p className="text-amber-600 font-bold mt-2 z-10">{product.interestRate}</p>
                             </div>
 
                             <div className="md:w-3/4 flex flex-col">

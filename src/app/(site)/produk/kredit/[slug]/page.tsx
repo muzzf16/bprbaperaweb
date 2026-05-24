@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import PageHeader from "@/components/layout/PageHeader";
 import { CREDIT_PRODUCTS } from "@/data/products.data";
@@ -78,6 +79,17 @@ export default async function CreditDetailPage({ params }: Props) {
 
                     {/* Main Content */}
                     <div className="lg:w-2/3">
+                        {product.imageUrl && (
+                            <div className="relative w-full h-[320px] md:h-[400px] rounded-2xl overflow-hidden mb-8 shadow-md">
+                                <Image
+                                    src={product.imageUrl}
+                                    alt={product.title}
+                                    fill
+                                    className="object-cover"
+                                    unoptimized
+                                />
+                            </div>
+                        )}
                         <div className="prose max-w-none text-gray-700">
                             <h2 className="text-2xl font-bold text-gray-900 mb-4">Deskripsi Produk</h2>
                             <div className="mb-8 leading-relaxed text-lg">
