@@ -2,28 +2,31 @@ import Link from "next/link";
 import PageHeader from "@/components/layout/PageHeader";
 import { CheckCircle } from "lucide-react";
 import { Metadata } from "next";
+import { getProductsByCategory } from "@/lib/sanity-queries";
+import { SAVING_PRODUCTS } from "@/lib/data";
 
 export const metadata: Metadata = {
     title: "Produk Tabungan - BPR Bapera",
     description: "Rencanakan masa depan dengan pilihan produk tabungan dari BPR Bapera. Aman, menguntungkan, dan dijamin LPS.",
 };
 
-// Import dynamic fetching
-import { getProductsByCategory } from "@/lib/sanity-queries";
-
-interface SanityProduct {
-    _id: string;
-    title: string;
-    interestRate?: string;
-    shortDescription?: string;
-    features?: string[];
-    requirements?: string[];
-}
-
 // Async Server Component
 export default async function TabunganPage() {
-    // Fetch products
-    const products = await getProductsByCategory('tabungan');
+    // Fetch products safely
+    let products = [];
+    try {
+        products = await getProductsByCategory('tabungan');
+    } catch (e) {
+        console.error("Failed to fetch tabungan products from Sanity, falling back to static seed data.", e);
+    }
+
+    // Fallback to static data
+    if (!products || products.length === 0) {
+        products = SAVING_PRODUCTS.map((p) => ({
+            ...p,
+            _id: p.id,
+        }));
+    }
 
     return (
         <main>
@@ -42,7 +45,7 @@ export default async function TabunganPage() {
                         </div>
                     )}
 
-                    {products.map((product: SanityProduct) => (
+                    {products.map((product: any) => (
                         <div key={product._id} className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 p-8 flex flex-col md:flex-row gap-8">
                             <div className="md:w-1/4 flex flex-col items-center justify-center text-center p-4 bg-blue-50 rounded-xl">
                                 {/* Icon Fallback */}

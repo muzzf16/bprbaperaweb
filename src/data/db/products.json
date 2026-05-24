@@ -1,0 +1,140 @@
+[
+    {
+        "id": "kredit-wirausaha",
+        "slug": "kredit-modal-kerja",
+        "category": "kredit",
+        "title": "Kredit Modal Kerja",
+        "shortDescription": "Solusi tambahan modal untuk pengembangan usaha Anda dengan bunga kompetitif.",
+        "description": "Kredit Modal Kerja ditujukan bagi kebutuhan modal usaha, baik untuk perdagangan, industri, maupun jasa. Fasilitas ini membantu Anda menjaga cash flow dan meningkatkan kapasitas bisnis.",
+        "interestRate": "1.25% flat / bulan",
+        "minTenor": "6 Bulan",
+        "maxTenor": "36 Bulan",
+        "features": [
+            "Proses cepat dan mudah",
+            "Plafon hingga Rp 500.000.000",
+            "Bunga bersaing sistem Flat/Anuitas",
+            "Bisa pelunasan dipercepat"
+        ],
+        "requirements": [
+            "Fotokopi KTP Suami Istri",
+            "Fotokopi Kartu Keluarga & Surat Nikah",
+            "Legalitas Usaha (NIB/SIUP/TDP)",
+            "Laporan Keuangan Sederhana",
+            "Fotokopi Agunan (SHM/BPKB)"
+        ],
+        "icon": "Wallet"
+    },
+    {
+        "id": "kredit-konsumtif",
+        "slug": "kredit-konsumtif",
+        "category": "kredit",
+        "title": "Kredit Konsumtif",
+        "shortDescription": "Dana tunai untuk kebutuhan pribadi seperti renovasi rumah, pendidikan, dll.",
+        "description": "Kredit Serbaguna untuk memenuhi berbagai kebutuhan konsumtif Anda, mulai dari biaya pendidikan, renovasi rumah, pernikahan, hingga liburan.",
+        "icon": "Home",
+        "interestRate": "1.5% flat / bulan",
+        "minTenor": "12 Bulan",
+        "maxTenor": "60 Bulan",
+        "features": [
+            "Punggutan biaya provisi rendah",
+            "Tenor fleksibel hingga 5 tahun",
+            "Plafon disesuaikan kemampuan bayar"
+        ],
+        "requirements": [
+            "Karyawan Tetap / Professional",
+            "Slip Gaji 3 Bulan Terakhir",
+            "SK Pengangkatan Karyawan",
+            "Fotokopi KTP & KK"
+        ]
+    },
+    {
+        "id": "kredit-umkm",
+        "slug": "kredit-umkm",
+        "category": "kredit",
+        "title": "Kredit Mikro UMKM",
+        "shortDescription": "Pinjaman khusus pedagang pasar dan usaha mikro dengan syarat sangat ringan.",
+        "description": "Kabar gembira bagi pelaku UMKM! Dapatkan akses permodalan mudah tanpa jaminan yang memberatkan untuk membesarkan warung atau lapak Anda.",
+        "icon": "Briefcase",
+        "interestRate": "1.0% flat / bulan",
+        "minTenor": "3 Bulan",
+        "maxTenor": "24 Bulan",
+        "features": [
+            "Tanpa biaya administrasi awal",
+            "Angsuran bisa harian/mingguan",
+            "Pendampingan usaha gratis"
+        ],
+        "requirements": [
+            "Memiliki usaha aktif min. 1 tahun",
+            "KTP & KK",
+            "Surat Keterangan Usaha dari Desa/Kelurahan"
+        ]
+    },
+    {
+        "id": "tabungan-bapera",
+        "slug": "tabungan-bapera",
+        "category": "tabungan",
+        "title": "Tabungan Bapera",
+        "shortDescription": "Tabungan harian dengan fasilitas menarik dan bebas biaya administrasi bulanan.",
+        "description": "Tabungan Bapera adalah simpanan masyarakat umum yang penarikannya dapat dilakukan setiap saat. Aman, mudah, dan menguntungkan.",
+        "icon": "PiggyBank",
+        "interestRate": "2.5% p.a",
+        "minTenor": "-",
+        "maxTenor": "-",
+        "features": [
+            "Setoran awal ringan hanya Rp 50.000",
+            "Bebas biaya administrasi bulanan",
+            "Suku bunga kompetitif",
+            "Layanan jemput bola (Pick Up Service)"
+        ],
+        "requirements": [
+            "Fotokopi KTP / SIM / Paspor yang masih berlaku",
+            "Mengisi formulir pembukaan rekening",
+            "Setoran awal minimal Rp 50.000"
+        ]
+    },
+    {
+        "id": "tabungan-pelajar",
+        "slug": "tabungan-pelajar",
+        "category": "tabungan",
+        "title": "Simpanan Pelajar",
+        "shortDescription": "Mendidik generasi muda untuk gemar menabung sejak dini.",
+        "description": "Tabungan khusus bagi pelajar (Siswa/Mahasiswa) dengan persyaratan mudah dan sederhana serta fitur yang menarik, dalam rangka edukasi dan inklusi keuangan untuk mendorong budaya menabung sejak dini.",
+        "icon": "PiggyBank",
+        "interestRate": "2.0% p.a",
+        "minTenor": "-",
+        "maxTenor": "-",
+        "features": [
+            "Setoran awal hanya Rp 10.000",
+            "Buku tabungan atas nama siswa",
+            "Bebas biaya ganti buku"
+        ],
+        "requirements": [
+            "Kartu Pelajar / Surat Keterangan Sekolah",
+            "KTP Orang Tua / Wali",
+            "Akte Kelahiran / KK"
+        ]
+    },
+    {
+        "id": "deposito-berjangka",
+        "slug": "deposito-berjangka",
+        "category": "deposito",
+        "title": "Deposito Berjangka",
+        "shortDescription": "Investasi aman dengan suku bunga tinggi dan jangka waktu fleksibel.",
+        "description": "Simpanan berjangka dengan suku bunga kompetitif yang memberikan keuntungan pasti dan rasa aman. Dijamin oleh LPS.",
+        "icon": "Landmark",
+        "interestRate": "Up to 6.75% p.a",
+        "minTenor": "1 Bulan",
+        "maxTenor": "12 Bulan",
+        "features": [
+            "Bunga lebih tinggi dari tabungan biasa",
+            "Pilihan jangka waktu 1, 3, 6, 12 bulan",
+            "Bunga dapat ditransfer ke rekening lain",
+            "Dapat dijadikan jaminan kredit (Back to Back)"
+        ],
+        "requirements": [
+            "Fotokopi KTP",
+            "Mengisi formulir pembukaan bilyet deposito",
+            "Penempatan minimal Rp 5.000.000"
+        ]
+    }
+]

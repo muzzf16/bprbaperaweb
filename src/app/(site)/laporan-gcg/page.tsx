@@ -1,24 +1,22 @@
 import PageHeader from "@/components/layout/PageHeader";
 import { Download, ShieldCheck } from "lucide-react";
 import { Metadata } from "next";
-import { getReports } from "@/lib/sanity-queries";
-
-export const revalidate = 60;
+import { readReports } from "@/lib/custom-db";
 
 export const metadata: Metadata = {
     title: "Laporan GCG - BPR Bapera",
     description: "Laporan Tata Kelola Perusahaan (Good Corporate Governance) PT BPR Bapera.",
 };
 
-interface Report {
-    _id: string;
-    year: string;
-    title: string;
-    fileUrl: string;
-}
-
 export default async function LaporanGCGPage() {
-    const GCG_REPORTS: Report[] = await getReports('gcg');
+    let reports: any[] = [];
+    try {
+        reports = await readReports();
+    } catch (e) {
+        console.error("Failed to read GCG reports", e);
+    }
+    
+    const gcgReports = reports.filter((r) => r.type === "gcg");
 
     return (
         <main>
@@ -48,8 +46,8 @@ export default async function LaporanGCGPage() {
                         </div>
 
                         <div className="divide-y divide-gray-100">
-                            {GCG_REPORTS.map((report) => (
-                                <div key={report._id} className="p-6 flex flex-col md:flex-row items-start md:items-center justify-between hover:bg-gray-50 transition">
+                            {gcgReports.map((report, idx) => (
+                                <div key={report.id || idx} className="p-6 flex flex-col md:flex-row items-start md:items-center justify-between hover:bg-gray-50 transition">
                                     <div>
                                         <h3 className="font-bold text-gray-800 text-lg mb-1">{report.title}</h3>
                                         <p className="text-sm text-gray-500">Periode Pelaporan: {report.year}</p>
@@ -66,6 +64,12 @@ export default async function LaporanGCGPage() {
                                 </div>
                             ))}
                         </div>
+                        
+                        {gcgReports.length === 0 && (
+                            <div className="p-12 text-center text-gray-500">
+                                Belum ada laporan GCG yang tersedia saat ini.
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

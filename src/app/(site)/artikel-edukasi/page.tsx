@@ -4,7 +4,7 @@ import { Calendar, User } from "lucide-react";
 import Image from "next/image";
 import { Metadata } from "next";
 import { getArticles } from "@/lib/sanity-queries";
-import { SanityArticle } from "@/types/article.types";
+import { ARTICLES } from "@/data";
 
 export const metadata: Metadata = {
     title: "Artikel & Edukasi - BPR Bapera",
@@ -12,7 +12,21 @@ export const metadata: Metadata = {
 };
 
 export default async function ArtikelPage() {
-    const articles = await getArticles();
+    let articles = [];
+    try {
+        articles = await getArticles();
+    } catch (e) {
+        console.error("Failed to fetch articles from Sanity", e);
+    }
+
+    // Fallback to static articles
+    if (!articles || articles.length === 0) {
+        articles = ARTICLES.map((a) => ({
+            ...a,
+            _id: a.id,
+            imageUrl: a.image, // Map image to imageUrl for fallback
+        }));
+    }
 
     return (
         <main>
@@ -31,9 +45,9 @@ export default async function ArtikelPage() {
                         </div>
                     )}
 
-                    {articles.map((article: SanityArticle) => (
+                    {articles.map((article: any) => (
                         <article key={article._id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow border border-gray-100 flex flex-col h-full">
-                            {/* Placeholder image if no real image */}
+                            {/* Article Image */}
                             <div className="h-48 bg-gray-200 relative">
                                 <div className="absolute inset-0 flex items-center justify-center text-gray-400 font-medium overflow-hidden">
                                     {article.imageUrl ? (
@@ -42,6 +56,7 @@ export default async function ArtikelPage() {
                                             alt={article.title}
                                             fill
                                             className="object-cover"
+                                            unoptimized
                                         />
                                     ) : (
                                         <span className="opacity-30 p-4 text-center">{article.title}</span>
@@ -58,11 +73,15 @@ export default async function ArtikelPage() {
                                 <div className="flex items-center text-xs text-gray-500 mb-3 space-x-3">
                                     <span className="flex items-center">
                                         <Calendar className="h-3 w-3 mr-1" />
-                                        {article.publishedAt ? new Date(article.publishedAt).toLocaleDateString("id-ID") : "-"}
+                                        {article.publishedAt ? (
+                                            article.publishedAt.includes("-") || article.publishedAt.includes("T")
+                                                ? new Date(article.publishedAt).toLocaleDateString("id-ID")
+                                                : article.publishedAt
+                                        ) : "-"}
                                     </span>
                                     <span className="flex items-center">
                                         <User className="h-3 w-3 mr-1" />
-                                        {article.author?.name || "Admin"}
+                                        {article.author?.name || article.author || "BPR Bapera Team"}
                                     </span>
                                 </div>
 

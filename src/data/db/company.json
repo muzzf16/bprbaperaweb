@@ -1,0 +1,42 @@
+{
+    "visi": "Menjadi Bank Perekonomian Rakyat yang sehat, kuat, aman, dan terpercaya dalam melayani masyarakat di Kabupaten Batang.",
+    "misi": [
+        "Memberikan layanan perbankan yang prima, aman, dan cepat bagi nasabah.",
+        "Membantu akselerasi pertumbuhan permodalan pelaku usaha mikro, kecil, dan menengah (UMKM).",
+        "Meningkatkan literasi dan inklusi keuangan masyarakat lokal secara berkelanjutan."
+    ],
+    "sejarah": "PT BPR Bapera Batang didirikan atas inisiatif peningkatan kesejahteraan ekonomi daerah Batang, berfungsi aktif memberikan penyaluran pinjaman modal dan menghimpun dana masyarakat.",
+    "direksi": [
+        {
+            "name": "Budi Santoso",
+            "position": "Direktur Utama",
+            "bio": "Berpengalaman lebih dari 20 tahun di industri perbankan mikro dan operasional BPR."
+        },
+        {
+            "name": "Siti Aminah",
+            "position": "Direktur Kepatuhan",
+            "bio": "Ahli kepatuhan perbankan dan tata kelola perusahaan (GCG) bersertifikat kompetensi OJK."
+        }
+    ],
+    "komisaris": [
+        {
+            "name": "Heri Wibowo",
+            "position": "Komisaris Utama",
+            "bio": "Senior praktisi keuangan daerah dan penasihat senior investasi."
+        }
+    ],
+    "homepageLayout": {
+        "sections": [
+            "features",
+            "hero",
+            "products",
+            "articles",
+            "testimonials",
+            "cta"
+        ],
+        "heroBgType": "image",
+        "heroBgImage": "/images/hero_bpr.png",
+        "heroBgOverlay": "70",
+        "heroTextAlignment": "center"
+    }
+}

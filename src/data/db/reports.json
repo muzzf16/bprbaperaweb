@@ -1,0 +1,55 @@
+[
+    {
+        "id": "rep-1",
+        "type": "keuangan",
+        "year": "2024",
+        "period": "Triwulan 1",
+        "title": "Laporan Keuangan Publikasi Maret 2024",
+        "fileUrl": "#"
+    },
+    {
+        "id": "rep-2",
+        "type": "keuangan",
+        "year": "2023",
+        "period": "Tahunan",
+        "title": "Laporan Keuangan Audit Desember 2023",
+        "fileUrl": "#"
+    },
+    {
+        "id": "rep-3",
+        "type": "keuangan",
+        "year": "2023",
+        "period": "Triwulan 3",
+        "title": "Laporan Keuangan Publikasi September 2023",
+        "fileUrl": "#"
+    },
+    {
+        "id": "rep-4",
+        "type": "keuangan",
+        "year": "2023",
+        "period": "Triwulan 2",
+        "title": "Laporan Keuangan Publikasi Juni 2023",
+        "fileUrl": "#"
+    },
+    {
+        "id": "rep-5",
+        "type": "gcg",
+        "year": "2023",
+        "title": "Laporan GCG Tahun 2023",
+        "fileUrl": "#"
+    },
+    {
+        "id": "rep-6",
+        "type": "gcg",
+        "year": "2022",
+        "title": "Laporan GCG Tahun 2022",
+        "fileUrl": "#"
+    },
+    {
+        "id": "rep-7",
+        "type": "gcg",
+        "year": "2021",
+        "title": "Laporan GCG Tahun 2021",
+        "fileUrl": "#"
+    }
+]

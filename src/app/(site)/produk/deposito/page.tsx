@@ -3,6 +3,7 @@ import PageHeader from "@/components/layout/PageHeader";
 import { CheckCircle, Landmark, ShieldCheck } from "lucide-react";
 import { Metadata } from "next";
 import { getProductsByCategory } from "@/lib/sanity-queries";
+import { DEPOSIT_PRODUCTS } from "@/data";
 
 interface SanityProduct {
     _id: string;
@@ -19,8 +20,22 @@ export const metadata: Metadata = {
 };
 
 export default async function DepositoPage() {
-    // Fetch dynamic data
-    const products = await getProductsByCategory('deposito');
+    // Fetch dynamic data with safety catch
+    let products = [];
+    try {
+        products = await getProductsByCategory('deposito');
+    } catch (e) {
+        console.error("Failed to fetch deposito products from Sanity CMS, falling back to static seed data.", e);
+    }
+
+    // Fallback to static data if no products returned or query failed
+    if (!products || products.length === 0) {
+        products = DEPOSIT_PRODUCTS.map((p) => ({
+            ...p,
+            _id: p.id,
+        }));
+    }
+
     return (
         <main>
             <PageHeader

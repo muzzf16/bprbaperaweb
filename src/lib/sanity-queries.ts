@@ -1,142 +1,52 @@
-import { groq } from "next-sanity";
-import { client } from "./sanity";
-// Product type may be needed for mapping Sanity types to internal types in the future
+import { readProducts, readArticles } from "./custom-db";
+
+/**
+ * Custom Local DB Queries
+ * 
+ * Replaces remote Sanity CMS GROQ queries with local, zero-dependency,
+ * extremely fast file-system reads from our custom JSON database.
+ */
 
 // Query to get all products by category
 export const getProductsByCategory = async (category: string) => {
-  return client.fetch(
-    groq`*[_type == "product" && category == $category] {
-      _id,
-      title,
-      "slug": slug.current,
-      shortDescription,
-      interestRate,
-      icon,
-      features,
-      requirements
-    }`,
-    { category }
-  );
+    try {
+        const products = await readProducts();
+        return products.filter((p) => p.category === category);
+    } catch (e) {
+        console.error("Local DB read error", e);
+        return [];
+    }
 };
 
 // Query to get single product by slug
 export const getProductBySlug = async (slug: string) => {
-  return client.fetch(
-    groq`*[_type == "product" && slug.current == $slug][0] {
-      _id,
-      title,
-      "slug": slug.current,
-      category,
-      shortDescription,
-      description,
-      interestRate,
-      features,
-      requirements,
-      icon
-    }`,
-    { slug }
-  );
+    try {
+        const products = await readProducts();
+        return products.find((p) => p.slug === slug) || null;
+    } catch (e) {
+        console.error("Local DB read error", e);
+        return null;
+    }
 };
 
 // Query to get all articles
 export const getArticles = async () => {
-  return client.fetch(
-    groq`*[_type == "article"] | order(publishedAt desc) {
-      _id,
-      title,
-      "slug": slug.current,
-      excerpt,
-      category,
-      publishedAt,
-      "imageUrl": featuredImage.asset->url
-    }`
-  );
+    try {
+        const articles = await readArticles();
+        return articles;
+    } catch (e) {
+        console.error("Local DB read error", e);
+        return [];
+    }
 };
 
 // Query to get single article by slug
 export const getArticleBySlug = async (slug: string) => {
-  return client.fetch(
-    groq`*[_type == "article" && slug.current == $slug][0] {
-      _id,
-      title,
-      "slug": slug.current,
-      excerpt,
-      content,
-      category,
-      publishedAt,
-      "imageUrl": featuredImage.asset->url,
-      author->{name, "imageUrl": image.asset->url}
-    }`,
-    { slug }
-  );
-};
-// Query to get team members
-export const getTeamMembers = async () => {
-  return client.fetch(
-    groq`*[_type == "team"] | order(order asc) {
-      _id,
-      name,
-      position,
-      role,
-      bio,
-      "imageUrl": image.asset->url
-    }`
-  );
-};
-
-// Query to get interest rates
-export const getInterestRates = async () => {
-  return client.fetch(
-    groq`*[_type == "interestRate"] | order(order asc) {
-      _id,
-      productName,
-      rate,
-      period,
-      type,
-      minBalance
-    }`
-  );
-};
-
-// Query to get Homepage Singleton
-export const getHomepageData = async () => {
-  return client.fetch(
-    groq`*[_type == "home"][0]{
-      heroTitle,
-      heroSubtitle,
-      "heroImageUrl": heroImage.asset->url,
-      features[]{
-        title,
-        description,
-        icon
-      },
-      ctaSection
-    }`
-  );
-};
-
-// Query to get Reports by category
-export const getReports = async (category: string) => {
-  return client.fetch(
-    groq`*[_type == "report" && category == $category] | order(year desc, period desc) {
-      _id,
-      title,
-      category,
-      year,
-      period,
-      "fileUrl": file.asset->url
-    }`,
-    { category }
-  );
-};
-
-// Query to get Site Settings
-export const getSiteSettings = async () => {
-  return client.fetch(
-    groq`*[_type == "siteSettings"][0]{
-      branding,
-      mainMenu,
-      contactInfo
-    }`
-  );
+    try {
+        const articles = await readArticles();
+        return articles.find((a) => a.slug === slug) || null;
+    } catch (e) {
+        console.error("Local DB read error", e);
+        return null;
+    }
 };

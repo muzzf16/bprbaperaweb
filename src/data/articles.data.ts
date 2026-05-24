@@ -13,7 +13,7 @@ export const ARTICLES: Article[] = [
         excerpt: "Pelajari cara mengatur arus kas agar bisnis UMKM Anda tetap sehat dan berkembang.",
         category: "Edukasi Keuangan",
         publishedAt: "10 Desember 2024",
-        image: "/images/article-1.jpg",
+        image: "https://placehold.co/800x600/1e3a8a/white?text=Kelola+Keuangan",
         content: `
             <p>Mengelola keuangan adalah jantung dari keberhasilan usaha kecil. Banyak pelaku UMKM yang memiliki produk bagus namun gagal karena manajemen kas yang buruk.</p>
             <h3>1. Pisahkan Keuangan Pribadi dan Usaha</h3>
@@ -31,7 +31,7 @@ export const ARTICLES: Article[] = [
         excerpt: "Bunga lebih tinggi dibanding bank umum dan tetap dijamin LPS. Simak penjelasannya.",
         category: "Produk",
         publishedAt: "05 Desember 2024",
-        image: "/images/article-2.jpg",
+        image: "https://placehold.co/800x600/1e3a8a/white?text=Deposito+BPR",
         content: `
             <p>BPR menawarkan suku bunga deposito yang lebih menarik dibandingkan bank umum. Hal ini diizinkan oleh LPS.</p>
             <p>Keamanan dana Anda tetap terjamin selama:</p>
@@ -49,7 +49,7 @@ export const ARTICLES: Article[] = [
         excerpt: "Jangan tergiur keuntungan instan yang tidak masuk akal. Ini ciri-ciri investasi ilegal.",
         category: "Literasi",
         publishedAt: "01 Desember 2024",
-        image: "/images/article-3.jpg",
+        image: "https://placehold.co/800x600/1e3a8a/white?text=Investasi+Bodong",
         content: `
             <p>Akhir-akhir ini marak penawaran investasi dengan imbal hasil fantastis. Masyarakat perlu waspada.</p>
             <p>Ciri-ciri investasi bodong:</p>

@@ -1,25 +1,22 @@
 import PageHeader from "@/components/layout/PageHeader";
 import { Download, FileText } from "lucide-react";
 import { Metadata } from "next";
-import { getReports } from "@/lib/sanity-queries";
-
-export const revalidate = 60;
+import { readReports } from "@/lib/custom-db";
 
 export const metadata: Metadata = {
     title: "Laporan Keuangan - BPR Bapera",
     description: "Publikasi laporan keuangan triwulanan dan tahunan PT BPR Bapera sebagai wujud transparansi.",
 };
 
-interface Report {
-    _id: string;
-    year: string;
-    period: string; // "Triwulan 1" | "Tahunan"
-    title: string;
-    fileUrl: string;
-}
-
 export default async function LaporanKeuanganPage() {
-    const FINANCE_REPORTS: Report[] = await getReports('financial');
+    let reports: any[] = [];
+    try {
+        reports = await readReports();
+    } catch (e) {
+        console.error("Failed to read finance reports", e);
+    }
+    
+    const financeReports = reports.filter((r) => r.type === "keuangan");
 
     return (
         <main>
@@ -37,8 +34,8 @@ export default async function LaporanKeuanganPage() {
                         </div>
 
                         <div className="divide-y divide-gray-100">
-                            {FINANCE_REPORTS.map((report) => (
-                                <div key={report._id} className="p-6 flex flex-col md:flex-row items-start md:items-center justify-between hover:bg-gray-50 transition">
+                            {financeReports.map((report, idx) => (
+                                <div key={report.id || idx} className="p-6 flex flex-col md:flex-row items-start md:items-center justify-between hover:bg-gray-50 transition">
                                     <div className="flex items-start">
                                         <div className="bg-amber-100 p-3 rounded-lg mr-4 text-amber-600">
                                             <FileText className="h-6 w-6" />
@@ -47,7 +44,7 @@ export default async function LaporanKeuanganPage() {
                                             <h3 className="font-bold text-gray-800 text-lg mb-1">{report.title}</h3>
                                             <div className="flex space-x-3 text-sm text-gray-500">
                                                 <span className="bg-gray-200 px-2 py-0.5 rounded text-xs font-semibold">{report.year}</span>
-                                                <span>{report.period}</span>
+                                                {report.period && <span>{report.period}</span>}
                                             </div>
                                         </div>
                                     </div>
@@ -65,7 +62,7 @@ export default async function LaporanKeuanganPage() {
                         </div>
 
                         {/* Empty State / More generic text */}
-                        {FINANCE_REPORTS.length === 0 && (
+                        {financeReports.length === 0 && (
                             <div className="p-12 text-center text-gray-500">
                                 Belum ada laporan yang tersedia saat ini.
                             </div>
