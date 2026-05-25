@@ -1,0 +1,18 @@
+[
+    {
+        "id": "asset-hero-bg",
+        "type": "image",
+        "path": "/images/hero_bpr.png",
+        "name": "Hero Background",
+        "altText": "Background resmi BPR Bapera",
+        "createdAt": "2026-05-25T00:00:00.000Z"
+    },
+    {
+        "id": "asset-og-home",
+        "type": "image",
+        "path": "/images/og-home.jpg",
+        "name": "Preview OG Home",
+        "altText": "Open Graph image Beranda",
+        "createdAt": "2026-05-25T00:00:00.000Z"
+    }
+]

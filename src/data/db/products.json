@@ -71,12 +71,12 @@
     },
     {
         "id": "tabungan-bapera",
-        "slug": "tabungan-bapera",
+        "slug": "tabungan-rakyat",
         "category": "tabungan",
-        "title": "Tabungan Bapera",
+        "title": "Tabungan Rakyat",
         "shortDescription": "Tabungan harian dengan fasilitas menarik dan bebas biaya administrasi bulanan.",
         "description": "Tabungan Bapera adalah simpanan masyarakat umum yang penarikannya dapat dilakukan setiap saat. Aman, mudah, dan menguntungkan.",
-        "icon": "PiggyBank",
+        "icon": "ShieldCheck",
         "interestRate": "2.5% p.a",
         "minTenor": "-",
         "maxTenor": "-",
@@ -90,7 +90,8 @@
             "Fotokopi KTP / SIM / Paspor yang masih berlaku",
             "Mengisi formulir pembukaan rekening",
             "Setoran awal minimal Rp 50.000"
-        ]
+        ],
+        "imageUrl": "/uploads/1779680389100_Tabungan_Wisata__4_.png"
     },
     {
         "id": "tabungan-pelajar",

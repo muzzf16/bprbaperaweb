@@ -1,44 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BPR Bapera Website
 
-## Getting Started
+Resmi website BPR Bapera Batang, dibangun dengan Next.js 14 App Router, TypeScript, Tailwind CSS, dan Sanity CMS untuk konten dinamis.
 
-First, run the development server:
+## Ringkasan
+
+- **Framework**: Next.js 14
+- **CMS**: Sanity CMS (embedded studio di `/studio`)
+- **Styling**: Tailwind CSS
+- **Bahasa**: TypeScript
+- **Folder utama**: `src/app`, `src/components`, `src/config`, `src/lib`, `src/data`
+- **Dokumen produk**: `PRD.md`
+
+## Jalankan Aplikasi
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Buka: `http://localhost:3000`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Struktur Utama
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `src/app` — App Router routes, halaman publik, API routes, dan embedded Sanity Studio
+- `src/components/layout` — `Header`, `Footer`, `PageHeader`
+- `src/components/ui` — komponen atom seperti `Button`, `Input`, `Container`, `Section`
+- `src/components/features` — fitur khusus seperti `CreditSimulator`, `FormPengaduan`, `TableInterest`
+- `src/components/product` — `CardProduct`
+- `src/lib` — utilitas, queries Sanity, hook custom
+- `src/config` — konfigurasi navigasi, site metadata, kontak
+- `src/data` — fallback static content dan seed data
+- `src/sanity` — konfigurasi dan schema Sanity
 
-## Project Structure
+## Halaman Penting
 
-This project follows a modular architecture:
+- `/` — Homepage
+- `/produk/kredit` — Produk kredit
+- `/produk/tabungan` — Produk tabungan
+- `/produk/deposito` — Produk deposito
+- `/simulasi-kredit` — Credit simulator
+- `/artikel-edukasi` — Artikel edukasi
+- `/laporan-keuangan` — Laporan keuangan
+- `/laporan-gcg` — Laporan GCG
+- `/suku-bunga` — Tabel suku bunga
+- `/form-pengaduan` — Form pengaduan nasabah
+- `/kontak` — Halaman kontak
+- `/compliance/privacy-policy` — Kebijakan privasi
+- `/compliance/terms-conditions` — Syarat & Ketentuan
+- `/compliance/disclaimer` — Disclaimer
+- `/studio` — Sanity Studio internal
 
-- `src/app`: Page routes and layouts
-- `src/components`:
-  - `layout/`: Structural components (Header, Footer)
-  - `ui/`: Reusable primitive components (Button, Input)
-  - `features/`: Feature components (CreditSimulator)
-- `src/config`: System configuration and constants
-- `src/types`: TypeScript definitions
-- `src/data`: Static content data
-- `src/lib`: Utilities and hooks
+## Catatan Pengembangan
 
+- Konten utama dikelola melalui Sanity CMS dengan fallback data lokal di `src/data`
+- Halaman detail produk kredit tersedia di `/produk/kredit/[slug]`
+- Halaman kontak masih menggunakan placeholder Google Maps di frontend
+- Dokumen `PRD.md` adalah sumber kebenaran untuk fitur dan status build
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Tips
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Gunakan `pnpm lint` untuk pemeriksaan linting
+- Gunakan `pnpm build` untuk memverifikasi build produksi
+- Perbarui `PRD.md` ketika ada perubahan fitur atau struktur rute

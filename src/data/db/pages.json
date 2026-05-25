@@ -1,0 +1,113 @@
+[
+    {
+        "id": "page-home",
+        "slug": "/",
+        "title": "Beranda",
+        "status": "published",
+        "seo": {
+            "title": "BPR Bapera Batang - Resmi",
+            "description": "Bank Perkreditan Rakyat lokal terpercaya di Batang untuk UMKM, tabungan, deposito, dan layanan nasabah terbaik.",
+            "ogImage": "/images/og-home.jpg",
+            "canonical": "https://bprbaperabatang.com"
+        },
+        "sections": [
+            {
+                "id": "section-hero",
+                "type": "hero",
+                "title": "Selamat Datang di BPR Bapera",
+                "settings": {
+                    "backgroundType": "gradient",
+                    "alignment": "left"
+                },
+                "blocks": [
+                    {
+                        "id": "block-hero-1",
+                        "type": "hero",
+                        "props": {
+                            "heading": "Solusi Finansial Terpercaya untuk UMKM Batang",
+                            "subheading": "Kredit, tabungan, deposito, dan layanan nasabah yang mudah diakses dari bank lokal yang diawasi OJK.",
+                            "actions": [
+                                { "label": "Ajukan Kredit", "href": "/produk/kredit" },
+                                { "label": "Buka Tabungan", "href": "/produk/tabungan" }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "section-features",
+                "type": "featureGrid",
+                "title": "Mengapa Pilih BPR Bapera",
+                "settings": {},
+                "blocks": [
+                    {
+                        "id": "block-features-1",
+                        "type": "featureGrid",
+                        "props": {
+                            "items": [
+                                { "title": "Diawasi OJK", "description": "Operasional resmi dengan pengawasan keuangan yang ketat." },
+                                { "title": "Jaminan LPS", "description": "Simpanan nasabah dijamin oleh LPS hingga batas ketentuan." },
+                                { "title": "Suku Bunga Kompetitif", "description": "Produk simpanan dan deposito dengan imbal hasil menarik." }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "section-about",
+                "type": "text",
+                "title": "Tentang Kami",
+                "settings": {},
+                "blocks": [
+                    {
+                        "id": "block-text-1",
+                        "type": "text",
+                        "props": {
+                            "content": "BPR Bapera Batang hadir untuk menjadi mitra keuangan bagi UMKM dan masyarakat lokal. Kami berfokus pada pelayanan cepat, persyaratan mudah, dan solusi simpanan yang terjangkau."
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "section-image",
+                "type": "image",
+                "title": "Kantor Cabang Kami",
+                "settings": {},
+                "blocks": [
+                    {
+                        "id": "block-image-1",
+                        "type": "image",
+                        "props": {
+                            "src": "/images/hero_bpr.png",
+                            "alt": "Ilustrasi kantor BPR Bapera"
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "section-cta",
+                "type": "cta",
+                "title": "Bergabunglah Sekarang",
+                "settings": {},
+                "blocks": [
+                    {
+                        "id": "block-cta-1",
+                        "type": "cta",
+                        "props": {
+                            "title": "Buka Akun atau Ajukan Kredit Hari Ini",
+                            "description": "Tim kami siap membantu perencanaan keuangan usaha dan keluarga Anda.",
+                            "buttonText": "Hubungi Kami",
+                            "buttonHref": "/kontak"
+                        }
+                    }
+                ]
+            }
+        ],
+        "createdAt": "2026-05-25T00:00:00.000Z",
+        "updatedAt": "2026-05-25T00:00:00.000Z",
+        "metadata": {
+            "author": "BPR Bapera Batang",
+            "category": "homepage"
+        }
+    }
+]

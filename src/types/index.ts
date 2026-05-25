@@ -36,3 +36,15 @@ export type {
     SelectProps,
 } from './component.types';
 
+// CMS types
+export type {
+    CmsPage,
+    CmsSection,
+    CmsBlock,
+    CmsAsset,
+    CmsTemplate,
+    CmsSeo,
+    CmsPageStatus,
+    CmsBlockType,
+} from './cms.types';
+

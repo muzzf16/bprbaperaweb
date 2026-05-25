@@ -6,6 +6,8 @@ import CardProduct from "@/components/product/CardProduct";
 import { getArticles } from "@/lib/sanity-queries";
 import { ARTICLES } from "@/data/articles.data";
 import { readCompany } from "@/lib/custom-db";
+import { readPages } from "@/lib/local-cms";
+import { renderCmsPage } from "@/lib/page-renderer.tsx";
 
 export default async function Home() {
   // Fetch dynamic articles for homepage
@@ -38,6 +40,16 @@ export default async function Home() {
     heroBgOverlay: "70",
     heroTextAlignment: "left"
   };
+
+  const pages = await readPages();
+  const homepagePage = pages.find((page) =>
+    page.status === "published" &&
+    (page.slug === "/" || page.slug === "" || page.slug === "/home" || page.slug === "home")
+  );
+
+  if (homepagePage) {
+    return renderCmsPage(homepagePage);
+  }
 
   const overlayOpacity = Number(layout.heroBgOverlay || 70) / 100;
   const isCenter = layout.heroTextAlignment === "center";

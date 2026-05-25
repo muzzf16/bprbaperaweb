@@ -130,20 +130,20 @@ src/
 │   │   └── deposito/           # Deposit products listing
 │   ├── simulasi-kredit/        # Credit simulator
 │   ├── tentang-kami/           # About us
-│   ├── visi-misi/              # Vision & Mission
-│   ├── struktur-organisasi/    # Organization structure
 │   ├── komisaris-direksi/      # Board of Directors
 │   ├── kontak/                 # Contact page
 │   ├── artikel-edukasi/        # Educational articles
 │   │   └── [slug]/             # Dynamic article detail
 │   ├── laporan-keuangan/       # Financial reports
 │   ├── laporan-gcg/            # GCG reports
-│   ├── gcg/                    # GCG overview
 │   ├── suku-bunga/             # Interest rates table
-│   ├── informasi-risiko/       # Risk information
-│   ├── kebijakan-privasi/      # Privacy policy
 │   ├── compliance/             # Compliance pages
-│   └── form-pengaduan/         # Complaint form
+│   │   ├── privacy-policy/
+│   │   ├── terms-conditions/
+│   │   └── disclaimer/
+│   ├── form-pengaduan/         # Complaint form
+│   ├── admin/                  # Internal admin page
+│   └── (studio)/               # Embedded Sanity Studio
 │
 ├── components/
 │   ├── layout/                 # Header, Footer, PageHeader
@@ -209,8 +209,6 @@ src/
 🏠 Beranda (/)
 │
 ├── 📋 Tentang Kami (/tentang-kami)
-│   ├── Visi & Misi (/visi-misi)
-│   ├── Struktur Organisasi (/struktur-organisasi)
 │   └── Komisaris & Direksi (/komisaris-direksi)
 │
 ├── 💳 Produk (/produk/*)
@@ -219,10 +217,7 @@ src/
 │   │   ├── Kredit Konsumtif (/produk/kredit/kredit-konsumtif)
 │   │   └── Kredit Mikro UMKM (/produk/kredit/kredit-umkm)
 │   ├── Tabungan (/produk/tabungan)
-│   │   ├── Tabungan Bapera
-│   │   └── Simpanan Pelajar
 │   └── Deposito (/produk/deposito)
-│       └── Deposito Berjangka
 │
 ├── 🧮 Simulasi Kredit (/simulasi-kredit)
 │
@@ -232,15 +227,14 @@ src/
 ├── 📊 Informasi Publik
 │   ├── Suku Bunga (/suku-bunga)
 │   ├── Laporan Keuangan (/laporan-keuangan)
-│   ├── Laporan GCG (/laporan-gcg)
-│   ├── Tata Kelola GCG (/gcg)
-│   └── Informasi Risiko (/informasi-risiko)
+│   └── Laporan GCG (/laporan-gcg)
 │
 ├── 📞 Kontak (/kontak)
 │
 ├── ⚖️ Legal & Compliance
-│   ├── Kebijakan Privasi (/kebijakan-privasi)
+│   ├── Kebijakan Privasi (/compliance/privacy-policy)
 │   ├── Syarat & Ketentuan (/compliance/terms-conditions)
+│   ├── Disclaimer (/compliance/disclaimer)
 │   └── Form Pengaduan (/form-pengaduan)
 │
 └── 🔧 Sanity Studio (/studio) [Internal Admin]
@@ -264,8 +258,8 @@ src/
 #### Footer Navigation
 - **Perusahaan**: Tentang Kami, Visi & Misi, Struktur Organisasi, Komisaris & Direksi
 - **Produk**: Kredit Modal Kerja, Kredit Konsumtif, Tabungan Bapera, Deposito Berjangka
-- **Informasi**: Suku Bunga, Laporan Keuangan, Laporan GCG, Informasi Risiko
-- **Legal**: Kebijakan Privasi, Syarat & Ketentuan, Form Pengaduan, Tata Kelola GCG
+- **Informasi**: Suku Bunga, Laporan Keuangan, Laporan GCG
+- **Legal**: Kebijakan Privasi, Syarat & Ketentuan, Disclaimer, Form Pengaduan
 
 ---
 
@@ -282,8 +276,8 @@ src/
 | **Keunggulan** | 3 card: Aman & Terdaftar (OJK/LPS), Bunga Kompetitif, Proses Cepat | ✅ Implementasi |
 | **Produk Unggulan** | 3 CardProduct: Kredit Modal Kerja, Tabungan, Deposito | ✅ Implementasi |
 | **CTA Section** | Background biru gelap dengan pattern, heading + tombol "Hubungi Kami" | ✅ Implementasi |
-| **Artikel Edukasi** | ⚠️ Belum ada di homepage — rekomendasi ditambahkan | 🟡 Planned |
-| **Testimoni** | ⚠️ Belum ada — rekomendasi ditambahkan | 🟡 Planned |
+| **Artikel Edukasi** | Seksi artikel edukasi sudah hadir dan menampilkan tiga posting terbaru | ✅ Implementasi |
+| **Testimoni** | Seksi testimoni nasabah sudah hadir di homepage | ✅ Implementasi |
 
 **Acceptance Criteria**:
 - [ ] Hero section responsive di mobile, tablet, desktop
@@ -475,12 +469,12 @@ src/
 
 ### 6.9 F-09: Halaman Profil Perusahaan
 
-| Path | Konten |
-|---|---|
-| `/tentang-kami` | Sejarah, profil singkat BPR Bapera |
-| `/visi-misi` | Visi, misi, dan nilai-nilai perusahaan |
-| `/struktur-organisasi` | Bagan organisasi |
-| `/komisaris-direksi` | Profil komisaris dan direksi |
+| Path | Konten | Status |
+|---|---|---|
+| `/tentang-kami` | Sejarah, profil singkat BPR Bapera | ✅ Implementasi |
+| `/komisaris-direksi` | Profil komisaris dan direksi | ✅ Implementasi |
+| `/visi-misi` | Visi, misi, dan nilai-nilai perusahaan | 🟡 Planned |
+| `/struktur-organisasi` | Bagan organisasi | 🟡 Planned |
 
 **Prioritas**: 🟡 High
 
@@ -503,7 +497,7 @@ src/
 
 **Fitur**:
 - Informasi kontak lengkap
-- Peta lokasi (Google Maps embed)
+- Peta lokasi (Google Maps embed placeholder)
 - Form kontak cepat
 - Link WhatsApp langsung
 - Departemen kontak (CS, Kredit, Compliance, Pengaduan)
@@ -516,8 +510,8 @@ src/
 |---|---|---|
 | `/laporan-keuangan` | Download laporan keuangan berkala | 🔴 Critical |
 | `/laporan-gcg` | Laporan Good Corporate Governance | 🔴 Critical |
-| `/gcg` | Tata kelola perusahaan | 🟡 High |
-| `/informasi-risiko` | Informasi profil risiko | 🟡 High |
+| `/gcg` | Tata kelola perusahaan | 🟡 Planned |
+| `/informasi-risiko` | Informasi profil risiko | 🟡 Planned |
 
 **Format**: PDF downloadable, tabel ringkasan online.
 
@@ -527,8 +521,9 @@ src/
 
 | Path | Konten |
 |---|---|
-| `/kebijakan-privasi` | Privacy policy |
+| `/compliance/privacy-policy` | Privacy policy |
 | `/compliance/terms-conditions` | Syarat & ketentuan |
+| `/compliance/disclaimer` | Disclaimer |
 
 **Komponen pendukung**:
 - `OJKBadge` — Badge/logo terdaftar OJK (KEP-XXX/OJK/2020)
@@ -728,10 +723,10 @@ Data statis di `src/data/` berfungsi sebagai:
 | Informasi produk & layanan lengkap | `/produk/*` | ✅ Ada |
 | Transparansi suku bunga | `/suku-bunga` | ✅ Ada |
 | Mekanisme pengaduan nasabah | `/form-pengaduan` | ✅ Ada |
-| Informasi GCG | `/gcg`, `/laporan-gcg` | ✅ Ada |
-| Informasi profil risiko | `/informasi-risiko` | ✅ Ada |
+| Informasi GCG | `/laporan-gcg` | ✅ Ada |
+| Informasi profil risiko | `/informasi-risiko` | 🟡 Planned |
 | Nomor registrasi OJK visible | `OJKBadge` di footer | ✅ Ada |
-| Kebijakan privasi | `/kebijakan-privasi` | ✅ Ada |
+| Kebijakan privasi | `/compliance/privacy-policy` | ✅ Ada |
 | Syarat & ketentuan layanan | `/compliance/terms-conditions` | ✅ Ada |
 
 ### 10.2 LPS (Lembaga Penjamin Simpanan)
@@ -838,10 +833,10 @@ Commit Format:
 - [ ] Update nomor registrasi OJK aktual
 - [ ] Koordinat peta kantor aktual
 - [ ] Email resmi (bukan Yahoo)
+- [x] Download PDF laporan keuangan
 
 ### Phase 3: Advanced Features 🔵
 
-- [ ] Download PDF laporan keuangan
 - [ ] Newsletter subscription
 - [ ] Blog/news filter dan search
 - [ ] Multi-language support (ID/EN)

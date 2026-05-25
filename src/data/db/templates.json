@@ -1,0 +1,47 @@
+[
+    {
+        "id": "template-hero-cta",
+        "name": "Hero + CTA",
+        "description": "Template halaman sederhana dengan hero section dan CTA section.",
+        "createdAt": "2026-05-25T00:00:00.000Z",
+        "updatedAt": "2026-05-25T00:00:00.000Z",
+        "sections": [
+            {
+                "id": "template-hero",
+                "type": "hero",
+                "title": "Hero Section",
+                "blocks": [
+                    {
+                        "id": "template-block-hero",
+                        "type": "hero",
+                        "props": {
+                            "heading": "Headline Utama",
+                            "subheading": "Deskripsi singkat untuk menarik perhatian.",
+                            "actions": [
+                                { "label": "Lihat Produk", "href": "/produk/kredit" },
+                                { "label": "Hubungi Kami", "href": "/kontak" }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "template-cta",
+                "type": "cta",
+                "title": "CTA Section",
+                "blocks": [
+                    {
+                        "id": "template-block-cta",
+                        "type": "cta",
+                        "props": {
+                            "title": "Siap berkembang bersama BPR Bapera?",
+                            "description": "Dapatkan solusi keuangan yang sesuai kebutuhan usaha dan keluarga Anda.",
+                            "buttonText": "Ajukan Sekarang",
+                            "buttonHref": "/kontak"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+]
